@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">叫料系统</string>
+
+    <string name="tab1">叫料</string>
+    <string name="tab2">查询</string>
+    <string name="tab3">收料</string>
+    <string name="tab4">设置</string>
+
+    <string name="hit_account">请输入用户名</string>
+    <string name="hit_pwd">请输入密码</string>
+
+</resources>
