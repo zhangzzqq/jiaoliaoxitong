@@ -3,17 +3,25 @@ package com.example.msystem.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.style.AbsoluteSizeSpan;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +34,7 @@ import com.example.msystem.network.HttpUrl;
 import com.example.msystem.utils.CommonUtils;
 import com.example.msystem.utils.ToastUtils;
 import com.example.msystem.utils.XmlUtils;
+import com.example.msystem.widget.BaseTextWatcher;
 import com.example.msystem.widget.DIYEditTextAccount;
 import com.example.msystem.widget.DIYEditTextPWD;
 import com.example.msystem.widget.LoadingDialogs;
@@ -36,6 +45,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -54,10 +64,32 @@ public class LoginActivity extends BaseActivity {
     ImageView ivPicAns;
     @Bind(R.id.remember_pass)
     CheckBox rememberPass;
+    @Bind(R.id.bg_commit)
+    Button btnCommit;
+    @Bind(R.id.login_menu)
+    ImageButton imageBtn;
 
     private DIYEditTextAccount et_account;
     private DIYEditTextPWD et_passward;
     private LoadingDialogs dialogs;
+
+    @NonNull
+    private TextWatcher loginTextWatcher = new BaseTextWatcher() {
+        @Override
+        public void afterTextChanged(Editable s) {
+            checkIfLoginEnable();
+        }
+    };
+
+    private void checkIfLoginEnable() {
+
+        if (TextUtils.isEmpty(et_account.getText().toString().trim())
+                || TextUtils.isEmpty(et_passward.getText().toString().trim())) {
+            btnCommit.setEnabled(false);
+        } else {
+            btnCommit.setEnabled(true);
+        }
+    }
 
     @Override
     public int getLayoutId() {
@@ -129,13 +161,52 @@ public class LoginActivity extends BaseActivity {
             et_passward.setText(App.mCache.getAsString(Constant.mima));
         }
 
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(LoginActivity.this, imageBtn);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_login_set, popupMenu.getMenu());
+                //使用反射，强制显示菜单图标
+                try {
+                    Field field = popupMenu.getClass().getDeclaredField("mPopup");
+                    field.setAccessible(true);
+                    MenuPopupHelper mHelper = (MenuPopupHelper) field.get(popupMenu);
+                    mHelper.setForceShowIcon(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    @Override
+                    public boolean onMenuItemClick(@NonNull MenuItem item) {
+                        // stub
+                        switch (item.getItemId()) {
+                            case R.id.login_menu_server:
+                                toConfigActivity();
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+
+
         /**
          * 记住用户名功能
          *
          * 1下次登录的时候直接自动输入
          */
 
-           et_account.setText(App.mCache.getAsString(Constant.userName));
+         et_account.setText(App.mCache.getAsString(Constant.userName));
+
+
+        //默认会有一次检测
+        checkIfLoginEnable();
+
+        et_passward.addTextChangedListener(loginTextWatcher);
+        et_account.addTextChangedListener(loginTextWatcher);
     }
 
     /**
@@ -274,6 +345,14 @@ public class LoginActivity extends BaseActivity {
 
         // 设置hint
         editText.setHint(new SpannedString(ss)); // 一定要进行转换,否则属性会消失
+    }
+
+
+    /**
+     * 跳转到设置界面
+     */
+    private void toConfigActivity() {
+        startActivityForResult(new Intent(this, ConfigURLActivity.class), 0);
     }
 
 

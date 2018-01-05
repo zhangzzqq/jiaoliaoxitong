@@ -8,5 +8,6 @@
 
     <string name="hit_account">请输入用户名</string>
     <string name="hit_pwd">请输入密码</string>
+    <string name="input_server_ip_address">请输入服务访问地址</string>
 
 </resources>

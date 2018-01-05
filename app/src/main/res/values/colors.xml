@@ -8,6 +8,8 @@
     <color name="gray">#8a8a8a</color>
     <color name="color_lightgreen">#66b488</color>
     <color name="color_darkgreen">#397854</color>
+    <color name="color_btton_gray">#90A4AE</color>
+    <color name="color_btton__text_gray">#616161</color>
 
 
     <color name="transparent3">#40000000</color>

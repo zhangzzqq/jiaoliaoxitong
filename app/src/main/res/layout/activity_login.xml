@@ -14,8 +14,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        >
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <RelativeLayout
             android:id="@+id/ly_top_bar"
@@ -42,16 +41,20 @@
                 android:layout_below="@+id/tv_ans_person"
                 android:layout_centerHorizontal="true" />
 
+            <ImageButton
+                android:id="@+id/login_menu"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="12dp"
+                android:layout_alignParentRight="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_options" />
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="艾尼斯人"
-            android:textColor="#fff"
-            android:textSize="26sp" />
     </android.support.v7.widget.Toolbar>
 
 
@@ -64,8 +67,7 @@
         android:background="@null"
         android:drawablePadding="5dp"
         android:hint="@string/hit_account"
-        android:padding="10dp"
-        />
+        android:padding="10dp" />
 
 
     <com.example.msystem.widget.DIYEditTextPWD
@@ -78,18 +80,16 @@
         android:drawablePadding="5dp"
         android:hint="@string/hit_pwd"
         android:inputType="textPassword"
-        android:padding="10dp"
-        />
+        android:padding="10dp" />
 
 
     <CheckBox
-        android:layout_marginTop="22dp"
-        android:layout_marginRight="50dp"
-        android:layout_gravity="right"
         android:id="@+id/remember_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_gravity="right"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="22dp" />
 
     <Button
         android:id="@+id/bg_commit"
@@ -100,7 +100,7 @@
         android:layout_marginTop="45dp"
         android:background="@drawable/selector_bt_bg"
         android:text="登录"
-        android:textColor="@android:color/white"
+        android:textColor="@color/selector_text_color"
         android:textSize="18sp" />
 
 </LinearLayout>
