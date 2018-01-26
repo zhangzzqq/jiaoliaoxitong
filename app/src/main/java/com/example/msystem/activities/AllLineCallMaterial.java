@@ -13,10 +13,10 @@ import android.widget.ImageView;
 
 import com.example.msystem.R;
 import com.example.msystem.adapter.AllLineAdapter;
+import com.example.msystem.base.App;
 import com.example.msystem.base.BaseActivity;
 import com.example.msystem.model.ChaxunCuiLiao;
 import com.example.msystem.model.Constant;
-import com.example.msystem.network.HttpUrl;
 import com.example.msystem.utils.L;
 import com.example.msystem.utils.ToastUtils;
 import com.example.msystem.utils.XmlUtils;
@@ -121,7 +121,7 @@ public class AllLineCallMaterial extends BaseActivity implements SwipeRefreshLay
 
     private void getDataFromServer() {
 
-        OkHttpUtils.get().url(HttpUrl.baseUrl+"/GetAllLineCallMaterial?").build().execute(new StringCallback() {
+        OkHttpUtils.get().url(App.IP_ADDRESS+"/GetAllLineCallMaterial?").build().execute(new StringCallback() {
 
             @Override
             public void onBefore(Request request, int id) {
@@ -246,7 +246,7 @@ public class AllLineCallMaterial extends BaseActivity implements SwipeRefreshLay
         final LoadingDialogs dialogs = new LoadingDialogs(mContext, "加载中...");
 
         OkHttpUtils.post()
-                .url(HttpUrl.baseUrl + "/RemindCallMaterial?")
+                .url(App.IP_ADDRESS + "/RemindCallMaterial?")
                 .addParams("strOrderNo", orderNo)
                 .addParams("strProductName", line)
                 .build()

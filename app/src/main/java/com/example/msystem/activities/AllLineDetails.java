@@ -8,9 +8,9 @@ import android.widget.ImageView;
 
 import com.example.msystem.R;
 import com.example.msystem.adapter.AllLineDetailsAdapter;
+import com.example.msystem.base.App;
 import com.example.msystem.base.BaseActivity;
 import com.example.msystem.model.Constant;
-import com.example.msystem.network.HttpUrl;
 import com.example.msystem.utils.ToastUtils;
 import com.example.msystem.utils.XmlUtils;
 import com.example.msystem.widget.LoadingDialogs;
@@ -89,7 +89,7 @@ public class AllLineDetails extends BaseActivity {
     private void showDetails(String allLinedanhao){
 
         OkHttpUtils.post()
-                .url(HttpUrl.baseUrl+"/GetMaterialListByCallOrderNo?")
+                .url(App.IP_ADDRESS+"/GetMaterialListByCallOrderNo?")
                 .addParams("strOrderNo",allLinedanhao)
                 .build()
                 .execute(new StringCallback() {

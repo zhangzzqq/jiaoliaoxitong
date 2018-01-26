@@ -18,7 +18,6 @@ public class ToastUtils
     public static synchronized ToastUtils getInstance(){
 
         if(toastUtils ==null){
-
             toastUtils = new ToastUtils();
         }
         return toastUtils;
@@ -28,11 +27,7 @@ public class ToastUtils
     }
 
 
-//    private ToastUtils()
-//    {
-//		/* cannot be instantiated */
-//        throw new UnsupportedOperationException("cannot be instantiated");
-//    }
+
 
     public static boolean isShow = true;
 

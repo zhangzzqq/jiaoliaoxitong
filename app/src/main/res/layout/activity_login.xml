@@ -46,8 +46,8 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="12dp"
                 android:layout_alignParentRight="true"
+                android:layout_marginBottom="12dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
@@ -83,13 +83,32 @@
         android:padding="10dp" />
 
 
-    <CheckBox
-        android:id="@+id/remember_pass"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="22dp" />
+        android:layout_marginTop="22dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:layout_toLeftOf="@+id/remember_pass"
+            android:text="@string/remind_passward"
+            android:textColor="@color/color_616161" />
+
+        <CheckBox
+            android:id="@+id/remember_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
 
     <Button
         android:id="@+id/bg_commit"
@@ -100,7 +119,7 @@
         android:layout_marginTop="45dp"
         android:background="@drawable/selector_bt_bg"
         android:text="登录"
-        android:textColor="@color/selector_text_color"
+        android:textColor="@android:color/white"
         android:textSize="18sp" />
 
 </LinearLayout>

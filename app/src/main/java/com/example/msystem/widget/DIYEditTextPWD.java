@@ -8,12 +8,11 @@ import android.text.InputType;
 import android.text.Selection;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.EditText;
 
 import com.example.msystem.R;
 
 
-public class DIYEditTextPWD extends EditText {
+public class DIYEditTextPWD extends android.support.v7.widget.AppCompatEditText {
 
 	/**
 	 * 位于控件内右侧密码是否可见

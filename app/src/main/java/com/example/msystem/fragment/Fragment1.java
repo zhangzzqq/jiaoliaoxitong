@@ -25,7 +25,6 @@ import com.example.msystem.base.BaseFragment;
 import com.example.msystem.model.Constant;
 import com.example.msystem.model.CreateMaterialBean;
 import com.example.msystem.model.Material;
-import com.example.msystem.network.HttpUrl;
 import com.example.msystem.utils.CommonUtils;
 import com.example.msystem.utils.L;
 import com.example.msystem.utils.ToastUtils;
@@ -310,7 +309,7 @@ public class Fragment1 extends BaseFragment implements EasyPermissions.Permissio
     private  void createJiaoLiaoOrder(String json,String line){
 
         OkHttpUtils.post()
-                .url(HttpUrl.baseUrl + "/AddCallList?")
+                .url(App.IP_ADDRESS + "/AddCallList?")
                 .addParams("strProductName", line)
                 .addParams("strJsonList", json)
                 .build()

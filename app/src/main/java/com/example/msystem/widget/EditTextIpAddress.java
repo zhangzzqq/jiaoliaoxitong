@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import com.example.msystem.R;
 
 
-public class DIYEditTextAccount extends android.support.v7.widget.AppCompatEditText implements TextWatcher {
+public class EditTextIpAddress extends android.support.v7.widget.AppCompatEditText implements TextWatcher {
 
 	/**
 	 * 位于控件内清除EditText内容的图片，也就是右边图片
@@ -22,27 +22,27 @@ public class DIYEditTextAccount extends android.support.v7.widget.AppCompatEditT
 	 */
 	private Drawable mLeftDrawable;
 
-	public DIYEditTextAccount(Context context) {
+	public EditTextIpAddress(Context context) {
 		super(context);
 		init();
 	}
 
-	public DIYEditTextAccount(Context context, AttributeSet attrs) {
+	public EditTextIpAddress(Context context, AttributeSet attrs) {
 		super(context, attrs, android.R.attr.editTextStyle);
 		init();
 	}
 
-	public DIYEditTextAccount(Context context, AttributeSet attrs, int defStyle) {
+	public EditTextIpAddress(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
 	}
 
 	private void init() {
 		// 设置背景
-		setBackgroundResource(R.drawable.edittext_background);
+		setBackgroundResource(R.drawable.ip_address_background);
 		mLeftDrawable = getCompoundDrawables()[0];
 		mLeftDrawable = getResources().getDrawable(
-				R.mipmap.login_account_icon);
+				R.drawable.ic_zero_24dp);
 
 		mLeftDrawable.setBounds(0, 0,
 				(int) (mLeftDrawable.getIntrinsicWidth() * 0.65),

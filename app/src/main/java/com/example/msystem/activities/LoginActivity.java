@@ -1,26 +1,16 @@
 package com.example.msystem.activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
-import android.text.Editable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.SpannedString;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.text.style.AbsoluteSizeSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,11 +20,9 @@ import com.example.msystem.base.App;
 import com.example.msystem.base.BaseActivity;
 import com.example.msystem.model.Constant;
 import com.example.msystem.model.UserLgoinBean;
-import com.example.msystem.network.HttpUrl;
 import com.example.msystem.utils.CommonUtils;
 import com.example.msystem.utils.ToastUtils;
 import com.example.msystem.utils.XmlUtils;
-import com.example.msystem.widget.BaseTextWatcher;
 import com.example.msystem.widget.DIYEditTextAccount;
 import com.example.msystem.widget.DIYEditTextPWD;
 import com.example.msystem.widget.LoadingDialogs;
@@ -72,24 +60,8 @@ public class LoginActivity extends BaseActivity {
     private DIYEditTextAccount et_account;
     private DIYEditTextPWD et_passward;
     private LoadingDialogs dialogs;
+    private static final int CONFIG_IP_ADDRESS =0;
 
-    @NonNull
-    private TextWatcher loginTextWatcher = new BaseTextWatcher() {
-        @Override
-        public void afterTextChanged(Editable s) {
-            checkIfLoginEnable();
-        }
-    };
-
-    private void checkIfLoginEnable() {
-
-        if (TextUtils.isEmpty(et_account.getText().toString().trim())
-                || TextUtils.isEmpty(et_passward.getText().toString().trim())) {
-            btnCommit.setEnabled(false);
-        } else {
-            btnCommit.setEnabled(true);
-        }
-    }
 
     @Override
     public int getLayoutId() {
@@ -110,7 +82,6 @@ public class LoginActivity extends BaseActivity {
         et_account.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-
                 if (hasFocus) {
                     final ViewGroup.LayoutParams params = showHeight(60);
                     // 获得焦点  
@@ -118,8 +89,6 @@ public class LoginActivity extends BaseActivity {
                     tvAnsPerson.setTextSize(18);
                     ivPicAns.setVisibility(View.GONE);
 
-                } else {
-                    // 失去焦点
                 }
             }
         });
@@ -127,7 +96,6 @@ public class LoginActivity extends BaseActivity {
         et_passward.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-
                 if (hasFocus) {
                     // 获得焦点  
                     final ViewGroup.LayoutParams params = showHeight(60);
@@ -139,12 +107,10 @@ public class LoginActivity extends BaseActivity {
                     toolbar.setLayoutParams(params);
                     tvAnsPerson.setTextSize(26);
                     ivPicAns.setVisibility(View.VISIBLE);
-                    // 失去焦点
                 }
             }
         });
 
-//        submitServer("13456");
 
         /**
          * 记住密码功能
@@ -155,8 +121,8 @@ public class LoginActivity extends BaseActivity {
          *
          */
 
-      String jizhupd =  App.mCache.getAsString(Constant.alreadyChecked);
-        if(jizhupd!=null&&jizhupd.equals(Constant.alreadyChecked)){
+        String jizhupd = App.mCache.getAsString(Constant.alreadyChecked);
+        if (jizhupd != null && jizhupd.equals(Constant.alreadyChecked)) {
             rememberPass.setChecked(true);
             et_passward.setText(App.mCache.getAsString(Constant.mima));
         }
@@ -199,37 +165,37 @@ public class LoginActivity extends BaseActivity {
          * 1下次登录的时候直接自动输入
          */
 
-         et_account.setText(App.mCache.getAsString(Constant.userName));
+        et_account.setText(App.mCache.getAsString(Constant.userName));
 
-
-        //默认会有一次检测
-        checkIfLoginEnable();
-
-        et_passward.addTextChangedListener(loginTextWatcher);
-        et_account.addTextChangedListener(loginTextWatcher);
     }
 
     /**
-     * 2记住用户的密码，在登录的时候进行处理
      *
-     * 2记住用户名字，在登录成功的时候记住用户名
+     * 实现功能：
+     *
+     * 记住用户名和密码
+     *
+     * 注意事项：
+     *
+     *
      */
 
-    private void rememberpdAndName(){
+    private void rememberpdAndName() {
 
-            if(rememberPass.isChecked()){
-                System.out.println("记住密码已选中");
-                App.mCache.put(Constant.alreadyChecked,Constant.alreadyChecked);
-                App.mCache.put(Constant.mima,et_passward.getText().toString().trim());
-            }else {
-                App.mCache.remove(Constant.alreadyChecked);
-                App.mCache.remove(Constant.mima);
-                System.out.println("记住密码没有选中");
-            }
-
-            App.mCache.put(Constant.userName,et_account.getText().toString().trim());
-
+        if (rememberPass.isChecked()) {
+            System.out.println("记住密码已选中");
+            App.mCache.put(Constant.alreadyChecked, Constant.alreadyChecked);
+            App.mCache.put(Constant.mima, et_passward.getText().toString().trim());
+        } else {
+            App.mCache.remove(Constant.alreadyChecked);
+            App.mCache.remove(Constant.mima);
+            System.out.println("记住密码没有选中");
         }
+
+        App.mCache.put(Constant.userName, et_account.getText().toString().trim());
+
+    }
+
     private ViewGroup.LayoutParams showHeight(int i) {
         ViewGroup.LayoutParams lp = toolbar.getLayoutParams();
         lp.height = (int) CommonUtils.dpToPixel(i, mContext);
@@ -248,13 +214,15 @@ public class LoginActivity extends BaseActivity {
                 }
                 String account = et_account.getText().toString();
                 String passward = et_passward.getText().toString();
-//                App.mCache.put("accountName",account);
-//                App.mCache.put("passward",passward);
-                TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                final String DEVICE_ID = tm.getDeviceId();
+
+                if (TextUtils.isEmpty(account) || TextUtils.isEmpty(passward)) {
+                    ToastUtils.showShort("用户名或密码不能为空!");
+                    return;
+                }
+
 
                 OkHttpUtils.post()
-                        .url(HttpUrl.baseUrl+"/UserLogin?")
+                        .url(App.IP_ADDRESS + "/UserLogin?")
                         .addParams("strUserName", account)
                         .addParams("strPwd", passward)
                         .build()
@@ -264,7 +232,7 @@ public class LoginActivity extends BaseActivity {
                             public void onBefore(Request request, int id) {
                                 super.onBefore(request, id);
 
-                                dialogs = new LoadingDialogs(LoginActivity.this,"登录中");
+                                dialogs = new LoadingDialogs(LoginActivity.this, "登录中");
                                 dialogs.show();
 
                             }
@@ -272,7 +240,7 @@ public class LoginActivity extends BaseActivity {
                             @Override
                             public void onError(okhttp3.Call call, Exception e, int id) {
                                 dialogs.close();
-                                ToastUtils.showShort("信息"+e.getMessage());
+                                ToastUtils.showShort("信息" + e.getMessage());
                             }
 
                             /**
@@ -293,16 +261,15 @@ public class LoginActivity extends BaseActivity {
                                     UserLgoinBean bean = new Gson().fromJson(json, UserLgoinBean.class);
                                     String result = bean.getStrResult();
                                     if (TextUtils.equals(result, "4")) {
-//                                    if (TextUtils.equals(result, "0")) {
                                         ToastUtils.showShort("登录成功!");
                                         rememberpdAndName();
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
-                                    } else if(TextUtils.equals(result, "5")){
+                                    } else if (TextUtils.equals(result, "5")) {
                                         ToastUtils.showShort("登录成功!");
                                         rememberpdAndName();
-                                        Intent intent = new Intent(LoginActivity.this,AllLineCallMaterial.class);
+                                        Intent intent = new Intent(LoginActivity.this, AllLineCallMaterial.class);
                                         startActivity(intent);
                                         finish();
 
@@ -325,88 +292,12 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    public static void startActivity(Activity activity) {
-
-        Intent intent = new Intent(activity, LoginActivity.class);
-        activity.startActivity(intent);
-    }
-
-    // 单独设置EditText控件中hint文本的字体大小，可能与EditText文字大小不同
-// @param editText 输入控件
-// @param hintText hint的文本内容
-// @param textSize hint的文本的文字大小（以dp为单位设置即可）
-    public static void setHintTextSize(EditText editText, String hintText, int textSize) {
-        // 新建一个可以添加属性的文本对象
-        SpannableString ss = new SpannableString(hintText);
-        // 新建一个属性对象,设置文字的大小
-        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(textSize, true);
-        // 附加属性到文本
-        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        // 设置hint
-        editText.setHint(new SpannedString(ss)); // 一定要进行转换,否则属性会消失
-    }
-
-
     /**
      * 跳转到设置界面
      */
     private void toConfigActivity() {
-        startActivityForResult(new Intent(this, ConfigURLActivity.class), 0);
+        startActivityForResult(new Intent(this, ConfigURLActivity.class), CONFIG_IP_ADDRESS);
     }
 
-
-//    private void submitServer(String str) {
-//
-//        OkHttpUtils
-//                .post()
-//                .url(HttpUrl.baseUrl+"QueryNextMaterial")
-//                .addParams("strReelID",str)
-//                .build()
-//                .execute(new StringCallback() {
-//
-//                    @Override
-//                    public void onBefore(Request request, int id) {
-//                        super.onBefore(request, id);
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Call call, Exception e, int id) {
-//
-//                        ToastUtils.showShort("扫描出现错误:"+e.getMessage());
-//
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String response, int id) {
-//
-//                        try {
-//
-//                            String json = XmlUtils.getJosn(response);
-//
-//                            ToastUtils.showShort(json);
-//                            SingleMaterial addCallListBean =  new Gson().fromJson(json, SingleMaterial.class);
-//                            //存入数据库
-//                            Material material = new Material();
-//                            material.setStrStationName(addCallListBean.getStrStationName());//料站号
-//                            material.setStrReelID(addCallListBean.getStrReelID());//ReelID
-//                            material.setStrPartNo(addCallListBean.getStrPartNo());//料号
-//                            material.setnQty(addCallListBean.getNQty());//数量
-//                            material.save();//保存这次的扫描数据
-//
-//                        } catch (XmlPullParserException e) {
-//                            e.printStackTrace();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                    }
-//                });
-//
-//
-//
-//    }
 
 }

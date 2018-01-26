@@ -19,7 +19,6 @@ import com.example.msystem.model.Constant;
 import com.example.msystem.model.Material;
 import com.example.msystem.model.ReceiveMaterialBean;
 import com.example.msystem.model.SingleMaterial;
-import com.example.msystem.network.HttpUrl;
 import com.example.msystem.utils.L;
 import com.example.msystem.utils.ToastUtils;
 import com.example.msystem.utils.XmlUtils;
@@ -178,7 +177,7 @@ public class TestScanActivity extends AppCompatActivity implements QRCodeView.De
         //通过扫描的结果获取后台对应的信息
                 OkHttpUtils
                 .post()
-                .url(HttpUrl.baseUrl+"/QueryNextMaterial?")
+                .url(App.IP_ADDRESS+"/QueryNextMaterial?")
                 .addParams("strReelID",str)
                 .build()
                 .execute(new StringCallback() {
@@ -272,7 +271,7 @@ public class TestScanActivity extends AppCompatActivity implements QRCodeView.De
             //通过扫描的结果与后台进行信息的比对
             OkHttpUtils
                     .post()
-                    .url(HttpUrl.baseUrl+"/ReceiveMaterial?")
+                    .url(App.IP_ADDRESS+"/ReceiveMaterial?")
                     .addParams("strReelID",reelId)
                     .addParams("strOrderNo",beiLiaoDanHao)
                     .build()

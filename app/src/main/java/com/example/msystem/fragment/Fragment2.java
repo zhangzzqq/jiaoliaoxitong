@@ -10,11 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.msystem.R;
+import com.example.msystem.base.App;
 import com.example.msystem.base.BaseFragment;
 import com.example.msystem.model.ChaxunCuiLiao;
 import com.example.msystem.model.ChaxunStatus;
 import com.example.msystem.model.Constant;
-import com.example.msystem.network.HttpUrl;
 import com.example.msystem.utils.ToastUtils;
 import com.example.msystem.utils.XmlUtils;
 import com.example.msystem.widget.LoadingDialogs;
@@ -95,7 +95,7 @@ public class Fragment2 extends BaseFragment {
 
 
         OkHttpUtils.post()
-                .url(HttpUrl.baseUrl + "/QueryCallStatus?")
+                .url(App.IP_ADDRESS + "/QueryCallStatus?")
                 .addParams("strOrderNo", beiliaoOrder)
                 .build()
                 .execute(new StringCallback() {
@@ -173,7 +173,7 @@ public class Fragment2 extends BaseFragment {
         }
 
         OkHttpUtils.post()
-                .url(HttpUrl.baseUrl + "/RemindCallMaterial?")
+                .url(App.IP_ADDRESS + "/RemindCallMaterial?")
                 .addParams("strOrderNo", beiliaoOrder)
                 .addParams("strProductName", line)
                 .build()

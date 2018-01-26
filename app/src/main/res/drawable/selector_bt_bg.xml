@@ -6,10 +6,10 @@
             <solid android:color="@color/color_lightgreen"/>
         </shape>
     </item>
-    <item android:state_enabled="false">
+    <item >
         <shape>
             <corners android:radius="8dp"/>
-            <solid android:color="@color/color_btton_gray"/>
+            <solid android:color="@color/color_lightgreen"/>
         </shape>
     </item>
 </selector>

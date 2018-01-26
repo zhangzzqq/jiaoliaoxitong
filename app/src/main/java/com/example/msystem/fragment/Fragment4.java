@@ -13,7 +13,6 @@ import com.example.msystem.R;
 import com.example.msystem.adapter.ChanXianAdapter;
 import com.example.msystem.base.App;
 import com.example.msystem.model.Constant;
-import com.example.msystem.network.HttpUrl;
 import com.example.msystem.utils.ToastUtils;
 import com.example.msystem.utils.XmlUtils;
 import com.example.msystem.widget.LoadingDialogs;
@@ -84,7 +83,7 @@ public class Fragment4 extends Fragment {
 
 
         OkHttpUtils.get()
-                .url(HttpUrl.baseUrl+"/GetProductNameList?")
+                .url(App.IP_ADDRESS+"/GetProductNameList?")
                 .build()
                 .execute(new StringCallback() {
 
@@ -126,8 +125,6 @@ public class Fragment4 extends Fragment {
                                 adapter.selectedPos = Integer.parseInt(chanxian);
                             }
                             recycler.setAdapter(adapter);
-
-
 
                         } catch (XmlPullParserException e) {
                             e.printStackTrace();
